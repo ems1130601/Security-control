@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateTime();
     setInterval(updateTime, 1000);
     restoreCountdown();
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 });
 
 function toggleLock(id) {
@@ -70,7 +71,8 @@ function updateTime() {
     const now = new Date();
     currentTimeElement.textContent = '現在時間: ' + now.toLocaleString('zh-TW', {
         year: 'numeric', month: 'numeric', day: 'numeric', 
-        hour: 'numeric', minute: 'numeric', second: 'numeric'
+        hour: 'numeric', minute: 'numeric', second: 'numeric',
+        hour12: false
     });
 }
 
@@ -130,5 +132,11 @@ function updateCountdown() {
 function restoreCountdown() {
     if (localStorage.getItem('countdownStart')) {
         countdownInterval = setInterval(updateCountdown, 1000);
+    }
+}
+
+function handleVisibilityChange() {
+    if (!document.hidden) {
+        updateCountdown();
     }
 }
