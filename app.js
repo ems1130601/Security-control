@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadState();
     updateTime();
     setInterval(updateTime, 1000);
+    restoreCountdown();
 });
 
 function toggleLock(id) {
@@ -74,36 +75,43 @@ function updateTime() {
 }
 
 let countdownInterval;
-let remainingTime = 20 * 60; // 初始時間為20分鐘（1200秒）
+let remainingTime;
+const countdownDuration = 20 * 60; // 初始時間為20分鐘（1200秒）
 
 function startCountdown() {
     if (countdownInterval) {
         if (confirm('是否重新開始計時？')) {
             clearInterval(countdownInterval);
-            remainingTime = 20 * 60;
+            localStorage.removeItem('countdownStart');
+            localStorage.setItem('countdownStart', Date.now().toString());
             document.getElementById('countdown').className = '';
             countdownInterval = setInterval(updateCountdown, 1000);
         }
     } else {
+        localStorage.setItem('countdownStart', Date.now().toString());
         countdownInterval = setInterval(updateCountdown, 1000);
     }
 }
 
 function resetCountdown() {
     clearInterval(countdownInterval);
-    remainingTime = 20 * 60;
+    remainingTime = countdownDuration;
+    localStorage.removeItem('countdownStart');
     const countdownElement = document.getElementById('countdown');
     countdownElement.textContent = '點擊開始倒數計時';
     countdownElement.className = '';
 }
 
 function updateCountdown() {
-    remainingTime--;
+    const startTime = parseInt(localStorage.getItem('countdownStart'));
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    remainingTime = countdownDuration - elapsed;
+
     const minutes = Math.floor(remainingTime / 60);
     const seconds = remainingTime % 60;
     const countdownElement = document.getElementById('countdown');
     countdownElement.textContent = `倒數計時: ${minutes}:${seconds.toString().padStart(2, '0')}`;
-    
+
     countdownElement.className = '';
     if (remainingTime <= 5 * 60) {
         countdownElement.className = 'danger';
@@ -116,5 +124,11 @@ function updateCountdown() {
         countdownElement.textContent = '時間到!';
         countdownElement.className = '';
         remainingTime = 0;
+    }
+}
+
+function restoreCountdown() {
+    if (localStorage.getItem('countdownStart')) {
+        countdownInterval = setInterval(updateCountdown, 1000);
     }
 }
