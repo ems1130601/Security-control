@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Security control</title>
+</head>
+<body>
+    
+</body>
+</html>
+
+</head>
+<body>
+<h1>新莊分隊救災安全管制</h1>
+<div class="main-container">
+    <div class="container" id="left-container">
+        <div class="input-group">
+            <h2>救災人員</h2>
+            <div class="input-container">
+                <input type="text" id="person1">
+            </div>
+            <div class="input-container">
+                <input type="text" id="person2">
+            </div>
+            <div class="input-container">
+                <input type="text" id="person3">
+            </div>
+            <div class="input-container">
+                <input type="text" id="person4">
+            </div>
+            <div class="input-container">
+                <button onclick="toggleLockGroup('left-container')">鎖定/解鎖</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="center-container">
+        <div class="input-group" id="input-container-time">
+            <h2>時間氣量記錄</h2>
+            <div class="input-container">
+                <h3>破壞時間</h3>
+                <input type="text" id="breakTime1">
+                <button onclick="toggleLock('breakTime1')">鎖定</button>
+            </div>
+            <div class="input-container">
+                <h3>入室時間</h3>
+                <input type="text" id="entryTime1">
+                <button onclick="toggleLock('entryTime1')">鎖定</button>
+            </div>
+            <div class="input-container">
+                <h3>找到患者</h3>
+                <input type="text" id="foundPatientTime1">
+                <button onclick="toggleLock('foundPatientTime1')">鎖定</button>
+            </div>
+            <div class="input-container">
+                <h3>患者救出</h3>
+                <input type="text" id="rescuedPatientTime1">
+                <button onclick="toggleLock('rescuedPatientTime1')">鎖定</button>
+            </div>
+            <div class="input-container">
+                <h3>退出時間</h3>
+                <input type="text" id="extraTime1">
+                <button onclick="toggleLock('extraTime1')">鎖定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="input-group" id="input-2">
+    <h2>備忘錄</h2>
+    <textarea id="memo"></textarea>
+    <button onclick="toggleLock('memo')">鎖定</button>
+    <button onclick="confirmReset()">重置</button>
+</div>
+
+<div class="current-time" id="currentTime">現在時間: </div>
+<div id="countdown" onclick="startCountdown()">點擊開始倒數計時</div>
+
+
+
+
+
+<script src="app.js"></script>
+</body>
+</html>
